@@ -110,7 +110,7 @@ SELECT
 - 문제 풀이 정답 화면 캡처
 - SQL 실행 결과 화면 캡처
 
-![week2](week2image.png)
+![week2](images/week2image.png)
 
 ---
 
@@ -134,7 +134,7 @@ ORDERY BY ANIMAL_ID
 - 새로 배운 점: 기본 데이터셋이 설정되어있을 경우 프로젝트ID 외에 데이터셋까지 생략 가능하다 / ORDER BY 문법을 통해 표시컬럼 순서를 조정할 수 있다.
 ```
 
-![레코드](week2image-1.png)
+![레코드](images/week2image-1.png)
 
 ## 🧩 문제 2
 
@@ -156,7 +156,7 @@ ORDERY BY ANIMAL_ID
 - 새로 배운 점: SELECT, FROM, WHERE, ORDERY BY 등의 SQL 키워드는 대소문자를 구문하지 않으나, 가독성을 위해 대문자로 작성해주는 것이 좋다.
 ```
 
-![아픈 동물](week2image-2.png)
+![아픈 동물](images/week2image-2.png)
 
 ---
 
