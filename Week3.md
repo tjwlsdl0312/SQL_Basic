@@ -145,10 +145,10 @@ LIMIT 10
 
 문제 링크: [최댓값 구하기](https://school.programmers.co.kr/learn/courses/30/lessons/59415)
 
-풀이 과정:
-SELECT
-    MAX(DATETIME) AS maxdate
-FROM ANIMAL_INS
+풀이 과정:   
+SELECT   
+    MAX(DATETIME) AS maxdate   
+FROM ANIMAL_INS   
 
 ```
 - 문제 요구사항: 가장 최근에 들어온(DATETIME col 사용) 동물의 보호 시작일이 출력되어야 함
@@ -162,10 +162,10 @@ FROM ANIMAL_INS
 
 문제 링크: [가장 비싼 상품 구하기](https://school.programmers.co.kr/learn/courses/30/lessons/131697)
 
-풀이 과정:
-SELECT
-    MAX(PRICE) AS MAX_PRICE
-FROM PRODUCT
+풀이 과정:   
+SELECT   
+    MAX(PRICE) AS MAX_PRICE   
+FROM PRODUCT   
 
 ```
 - 사용한 집계 함수: MAX(col) AS name - 최댓값 구하기
@@ -179,14 +179,14 @@ FROM PRODUCT
 
 문제 링크: [고양이와 개는 몇 마리 있을까](https://school.programmers.co.kr/learn/courses/30/lessons/59040)
 
-풀이 과정:
-SELECT
-    ANIMAL_TYPE,
-    COUNT(ANIMAL_ID) AS count
-FROM ANIMAL_INS
-WHERE ANIMAL_TYPE IN ('Cat', 'Dog')
-GROUP BY ANIMAL_TYPE
-ORDER BY ANIMAL_TYPE
+풀이 과정:   
+SELECT   
+    ANIMAL_TYPE,   
+    COUNT(ANIMAL_ID) AS count   
+FROM ANIMAL_INS   
+WHERE ANIMAL_TYPE IN ('Cat', 'Dog')   
+GROUP BY ANIMAL_TYPE   
+ORDER BY ANIMAL_TYPE   
 
 ```
 - 그룹화 기준: 개와 고양이를 구분할 수 있는 ANIMAL_TYPE
