@@ -173,7 +173,7 @@ FROM PRODUCT
 - 결과를 검증한 방법: 문제 1과 동일하게, 기준이 되는 컬럼은 없었고 특정 컬럼 값을 집계하여 가장 큰 값을 찾아내면 되는 방식이었기에 같은 흐름으로 풀이를 진행했다. 
 ```
 
-![week3image-2](image/week3image-2.png)
+![week3image-2](images/week3image-2.png)
 
 ## 🧩 문제 3
 
@@ -199,7 +199,7 @@ WHERE ANIMAL_TYPE = 'Cat'
 (NOT IN)도 가능(-> 개나 고양이가 아닌 동물을 가져옴)
 ```
 
-![week3image-3](image/week3image-3.png)
+![week3image-3](images/week3image-3.png)
 
 ---
 
