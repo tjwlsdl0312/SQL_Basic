@@ -132,8 +132,8 @@ LIMIT 10
 - 문제 풀이 정답 화면 캡처
 - SQL 실행 결과 화면 캡처
 
-![week3image](image/week3image.png)
-![week3image(1)](image/week3image(1).png)
+![week3image](images/week3image.png)
+![week3image(1)](images/week3image(1).png)
 
 ---
 
