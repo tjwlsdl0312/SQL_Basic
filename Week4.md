@@ -201,13 +201,13 @@ SELECT
 
 문제 링크: [특정 옵션이 포함된 자동차 리스트 구하기](https://school.programmers.co.kr/learn/courses/30/lessons/157343)
 
-풀이 과정:
-SELECT 
-    *
-FROM CAR_RENTAL_COMPANY_CAR
-WHERE 
-    OPTIONS LIKE '%네비게이션%'
-ORDER BY CAR_ID DESC
+풀이 과정:         
+SELECT            
+    *             
+FROM CAR_RENTAL_COMPANY_CAR             
+WHERE                
+    OPTIONS LIKE '%네비게이션%'             
+ORDER BY CAR_ID DESC                
 
 ```
 - 찾으려는 문자열 조건: OPTIONS 에서 '네비게이션'을 포함하는 자동차 리스트를 출력하기
@@ -224,15 +224,15 @@ ORDER BY CAR_ID DESC
 
 문제 링크: [강원도에 위치한 생산공장 목록 출력하기](https://school.programmers.co.kr/learn/courses/30/lessons/131112)
 
-풀이 과정:
-SELECT 
-    FACTORY_ID,
-    FACTORY_NAME,
-    ADDRESS
-FROM FOOD_FACTORY
-WHERE
-    ADDRESS LIKE "%강원도%"
-ORDER BY FACTORY_ID 
+풀이 과정:           
+SELECT     
+    FACTORY_ID,     
+    FACTORY_NAME,         
+    ADDRESS           
+FROM FOOD_FACTORY            
+WHERE             
+    ADDRESS LIKE "%강원도%"             
+ORDER BY FACTORY_ID               
 
 ```
 - 문제에서 요구한 조건: ADDRESS에서 '강원도'를 포함하는 음식 공장의 리스트를 출력하기
@@ -247,25 +247,25 @@ ORDER BY FACTORY_ID
 
 문제 링크: [이름에 el이 들어가는 동물 찾기](https://school.programmers.co.kr/learn/courses/30/lessons/59047)
 
-풀이 과정:
-SELECT 
-    ANIMAL_ID,
-    NAME
-FROM ANIMAL_INS
-WHERE 
-    ANIMAL_TYPE = "Dog" and
-    NAME LIKE "%EL%" or "%el%" or "%El%"
--> 처음 내 시안. 대소문자 처리 방식이 이건 아닐 것 같았음.
+풀이 과정:     
+SELECT                  
+    ANIMAL_ID,             
+    NAME             
+FROM ANIMAL_INS            
+WHERE               
+    ANIMAL_TYPE = "Dog" and              
+    NAME LIKE "%EL%" or "%el%" or "%El%"             
+-> 처음 내 시안. 대소문자 처리 방식이 이건 아닐 것 같았음.             
 
-(수정안)
-SELECT 
-    ANIMAL_ID,
-    NAME
-FROM ANIMAL_INS
-WHERE
-    ANIMAL_TYPE = "Dog" and
-    LOWER(NAME) LIKE "%el%"
-ORDER BY LOWER(NAME), ANIMAL_ID
+(수정안)       
+SELECT           
+    ANIMAL_ID,          
+    NAME           
+FROM ANIMAL_INS         
+WHERE          
+    ANIMAL_TYPE = "Dog" and        
+    LOWER(NAME) LIKE "%el%"         
+ORDER BY LOWER(NAME), ANIMAL_ID         
 
 -> LOWER(NAME)을 통해서 일단 NAME 항목을 모두 소문자로 바꾼 후 비교.
 -> 정렬에서 LOWER이 들어가야 되는데, 어떤 데서는 ex. Bella와 bella 가 있을 때 둘다 같은건데 Bella를 앞에 둘 수 있기 때문
@@ -283,26 +283,26 @@ ORDER BY LOWER(NAME), ANIMAL_ID
 
 문제 링크: [카테고리 별 상품 개수 구하기](https://school.programmers.co.kr/learn/courses/30/lessons/131529)
 
-풀이 과정:
-(처음 내꺼)
-SELECT
-    CATEGORY,
-    COUNT(left2) AS PRODUCTS
-FROM PRODUCT
-GROUP BY 
-    LEFT(PRODUCT_CODE,2) AS left2
-ORDER BY PRODUCT_CODE
+풀이 과정:          
+(처음 내꺼)          
+SELECT            
+    CATEGORY,             
+    COUNT(left2) AS PRODUCTS           
+FROM PRODUCT            
+GROUP BY             
+    LEFT(PRODUCT_CODE,2) AS left2            
+ORDER BY PRODUCT_CODE           
 
--> 실행되는 과정과 셀 실행 순서는 다르다
+-> 실행되는 과정과 셀 실행 순서는 다르다         
 -> 기존의 칼럼과 그룹화와 별칭 지정을 통해 새로 만들어지는 칼럼 구분 주의
 
-(수정안)
-SELECT 
-    LEFT(PRODUCT_CODE, 2) AS CATEGORY,
-    COUNT(*) AS PRODUCTS
-FROM PRODUCT 
-GROUP BY LEFT(PRODUCT_CODE, 2)
-ORDER BY CATEGORY;
+(수정안)        
+SELECT            
+    LEFT(PRODUCT_CODE, 2) AS CATEGORY,           
+    COUNT(*) AS PRODUCTS           
+FROM PRODUCT         
+GROUP BY LEFT(PRODUCT_CODE, 2)      
+ORDER BY CATEGORY;         
 
 -> 앞 2자리를 뽑아내기 위해 LEFT() 사용
 -> * 은 꼭 칼럼 전체가 아니라, 전체 행을 뽑아낸다고 생각해야 함. 내가 출력으로 선택한 게 CATEGORY 니까 그거에 맞춰서 셀 수를 세주겠지..
