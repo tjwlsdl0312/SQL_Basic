@@ -139,13 +139,44 @@ Espanso -> 핵심 로직: 특정 단어가 감지되면 정의된 것으로 바�
 ## 04.
 
 ```
-개념 이름: 문자열 함수 5개()
+개념 이름: 문자열 함수 5개(CONCAT, SPLIT, REPLACE, TRIM, UPPER)
 
-개념 설명:   
-   
+개념 설명:  
+1. 문자열 붙이기 => CONCAT
+- CONCAT(col1, col2...)
+- FROM이 없는데 어떻게 동작하지?
+- CONCAT 인자로 STRING이나 숫자를 넣을 때는 데이터를 직접 넣어준 것 => FROM 없이도 실행
 
-추가 설명:   
+SELECT
+  CONCAT("안녕","하세요") AS result
 
+2. 문자열 분리하기 => SPLIT
+- 쪼개다
+- SPLIT(문자열_원본, 나눌 기준이 되는 문자)
+- 결과과 배열(ARRAY) 타입으로 나온다
+
+SELECT
+  SPLIT("가, 나,다, 라",", ") AS result
+
+3. 특정 단어 수정하기 -> REPLACE
+- 치환하다
+- REPLACE(문자열_원본, 찾을 단어, 바꿀 단어)
+
+SELECT
+  REPLACE("안녕하세요", "안녕", "실천") AS result
+
+4. 문자열 자르기 => TRIM
+- 자르다
+- TRIM(문자열_원본, 자를 단어)
+
+SELECT
+  TRIM("안녕하세요", "하세요") AS result
+
+5. 영어 소문자를 대문자로 변경 => UPPER
+- UPPER(문자열_원본)
+
+SELECT
+  UPPER("abc") AS result
 ```
 
 ---
@@ -158,6 +189,8 @@ Espanso -> 핵심 로직: 특정 단어가 감지되면 정의된 것으로 바�
 - 문제 풀이 정답 화면 캡처
 - SQL 실행 결과 화면 캡처
 
+![week4image](images/week4image.png)
+
 ---
 
 # 3️⃣ 확인 문제
@@ -169,65 +202,128 @@ Espanso -> 핵심 로직: 특정 단어가 감지되면 정의된 것으로 바�
 문제 링크: [특정 옵션이 포함된 자동차 리스트 구하기](https://school.programmers.co.kr/learn/courses/30/lessons/157343)
 
 풀이 과정:
+SELECT 
+    *
+FROM CAR_RENTAL_COMPANY_CAR
+WHERE 
+    OPTIONS LIKE '%네비게이션%'
+ORDER BY CAR_ID DESC
 
 ```
-- 찾으려는 문자열 조건:
-- 사용한 문자열 조건 문법:
-- 정렬 기준:
+- 찾으려는 문자열 조건: OPTIONS 에서 '네비게이션'을 포함하는 자동차 리스트를 출력하기
+- 사용한 문자열 조건 문법: 
+1. LIKE : =은 완전 똑같은지를 묻는 개념, LIKE는 이런 패턴/모양인지를 묻는 개념
+2. "%%" : 네비게이션으로 시작하든, 끝나든, 어디든 네이게이션이 포함되면 되게 하는 문법
+3. * : 전체가 필요하면 하나하나 적지 말고 한번에!
+- 정렬 기준: CAR_ID 기준 내림차순
 ```
 
-<!-- 정답을 맞추게 되면, 정답입니다. 이 부분을 캡처해서 이 주석을 지우시고 첨부해주시면 됩니다. -->
+![image-1](images/week4image-1.png)
 
 ## 🧩 문제 2
 
 문제 링크: [강원도에 위치한 생산공장 목록 출력하기](https://school.programmers.co.kr/learn/courses/30/lessons/131112)
 
 풀이 과정:
+SELECT 
+    FACTORY_ID,
+    FACTORY_NAME,
+    ADDRESS
+FROM FOOD_FACTORY
+WHERE
+    ADDRESS LIKE "%강원도%"
+ORDER BY FACTORY_ID 
 
 ```
-- 문제에서 요구한 조건:
-- WHERE 절로 옮긴 방식:
-- 정렬 기준:
+- 문제에서 요구한 조건: ADDRESS에서 '강원도'를 포함하는 음식 공장의 리스트를 출력하기
+- WHERE 절로 옮긴 방식: 1번 문제에서 알게 된 LIKE와 %%을 사용했다.
+- 정렬 기준: FACTORY_ID 기준 오름차순
+- 기타: 원래 '* EXCEPT(TLNO)'가 될 텐데 프로그래머스에서는 지원하지 않는다고 한다. / 여러 개 나열할 때는 엔터 친다고 콤마 빼먹지 않기 / ORDER BY 에서 오름차순은 디폴트 / WHERE을 자꾸 SELECT로 쓰는 것 주의
 ```
 
-<!-- 정답을 맞추게 되면, 정답입니다. 이 부분을 캡처해서 이 주석을 지우시고 첨부해주시면 됩니다. -->
+![image-2](images/week4image-2.png)
 
 ## 🧩 문제 3
 
 문제 링크: [이름에 el이 들어가는 동물 찾기](https://school.programmers.co.kr/learn/courses/30/lessons/59047)
 
 풀이 과정:
+SELECT 
+    ANIMAL_ID,
+    NAME
+FROM ANIMAL_INS
+WHERE 
+    ANIMAL_TYPE = "Dog" and
+    NAME LIKE "%EL%" or "%el%" or "%El%"
+-> 처음 내 시안. 대소문자 처리 방식이 이건 아닐 것 같았음.
+
+(수정안)
+SELECT 
+    ANIMAL_ID,
+    NAME
+FROM ANIMAL_INS
+WHERE
+    ANIMAL_TYPE = "Dog" and
+    LOWER(NAME) LIKE "%el%"
+ORDER BY LOWER(NAME), ANIMAL_ID
+
+-> LOWER(NAME)을 통해서 일단 NAME 항목을 모두 소문자로 바꾼 후 비교.
+-> 정렬에서 LOWER이 들어가야 되는데, 어떤 데서는 ex. Bella와 bella 가 있을 때 둘다 같은건데 Bella를 앞에 둘 수 있기 때문
+-> 기준1 안되면 기준2 사용 = ORDERY BY 기준1, 기준2
 
 ```
-- 찾으려는 문자열 패턴:
-- 대소문자를 처리한 방식:
-- 정렬 기준:
+- 찾으려는 문자열 패턴: 이름에 'el'이 들어가는 개의 아이디와 이름을 조회하기
+- 대소문자를 처리한 방식: "%EL%" or "%el%" or "%El%"을 통해서 가능한 조건을 모두 나열했다. or로 합집합 선택
+- 정렬 기준: 이름 순. 이름이 같은 경우 아이디 순
 ```
 
-<!-- 정답을 맞추게 되면, 정답입니다. 이 부분을 캡처해서 이 주석을 지우시고 첨부해주시면 됩니다. -->
+![week4-3](images/week4image-3.png)
 
 ## 🧩 문제 4
 
 문제 링크: [카테고리 별 상품 개수 구하기](https://school.programmers.co.kr/learn/courses/30/lessons/131529)
 
 풀이 과정:
+(처음 내꺼)
+SELECT
+    CATEGORY,
+    COUNT(left2) AS PRODUCTS
+FROM PRODUCT
+GROUP BY 
+    LEFT(PRODUCT_CODE,2) AS left2
+ORDER BY PRODUCT_CODE
+
+-> 실행되는 과정과 셀 실행 순서는 다르다
+-> 기존의 칼럼과 그룹화와 별칭 지정을 통해 새로 만들어지는 칼럼 구분 주의
+
+(수정안)
+SELECT 
+    LEFT(PRODUCT_CODE, 2) AS CATEGORY,
+    COUNT(*) AS PRODUCTS
+FROM PRODUCT 
+GROUP BY LEFT(PRODUCT_CODE, 2)
+ORDER BY CATEGORY;
+
+-> 앞 2자리를 뽑아내기 위해 LEFT() 사용
+-> * 은 꼭 칼럼 전체가 아니라, 전체 행을 뽑아낸다고 생각해야 함. 내가 출력으로 선택한 게 CATEGORY 니까 그거에 맞춰서 셀 수를 세주겠지..
+-> 끝내는 거 ;
 
 ```
-- 추출한 문자열 범위:
-- 그룹화 기준:
-- 정렬 기준:
+- 추출한 문자열 범위: PRODUCT_CODE 에서 앞 2자리
+- 그룹화 기준: PRODUCT_CODE 에서 앞 2자리 기준
+- 정렬 기준: 새로 성성한 카테고리 코드 기준
 ```
 
-<!-- 정답을 맞추게 되면, 정답입니다. 이 부분을 캡처해서 이 주석을 지우시고 첨부해주시면 됩니다. -->
+![week4image4](images/week4image-4.png)
 
 ---
 
 # 4️⃣ 이번 주 회고
 
 ```
-1. 쿼리 작성 흐름을 잡을 때 도움이 된 방법:
-2. 타입 변환이나 문자열 처리에서 조심해야 할 점:
-3. 앞으로 문제 풀이 때 먼저 확인할 것:
+1. 쿼리 작성 흐름을 잡을 때 도움이 된 방법: 항상 코드가 위에서 아래로 진행된다는 것 실행과정과 다르다는 것
+2. 타입 변환이나 문자열 처리에서 조심해야 할 점: 결과물에만 타입 변환을 할 수 있는 게 아니라 과정 중에도 타입 변환이나 처리가 된다는 것
+3. 앞으로 문제 풀이 때 먼저 확인할 것: sql 조건문 항상 먼저 적어보기 / 스펠링 확인
 ```
 
 수고하셨습니다!
