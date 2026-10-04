@@ -128,8 +128,8 @@ IF(조건문, True일 때의 값, False일 때의 값) AS 새로운_컬럼_이�
 SELECT
     HISTORY_ID,
     CAR_ID,
-    DATE(START_DATE) AS START_DATE,
-    DATE(END_DATE) AS END_DATE,
+    START_DATE,
+    END_DATE,
     CASE
         WHEN DATEDIFF(END_DATE, START_DATE) +1 >= 30 THEN '장기 대여'
         ELSE '단기 대여'
@@ -160,9 +160,9 @@ WHERE TIME >= '2021-01-01' AND TIME <= '2021-12-31'
 ```
 
 ```
-- 문제에서 요구한 연도: 2021년 한 해
-- 사용한 날짜 조건: WHERE 문에서 TIME 컬럼의 시간을 부등호를 통해 조건을 걸었다. 
-- 집계한 대상: TIME 항목에서 2021년에 집계된 모든 데이터 * 대상
+- 문제에서 요구한 연도: 2021년
+- 사용한 날짜 조건: WHERE 문에서 TIME 컬럼의 시간을 부등호를 통해 조건을 걸었다. 교집합이니 AND(합은 OR)
+- 집계한 대상: TIME 항목에서 2021년에 집계된 모든 데이터 * 대상 (그 칼럼만으로 하면 안됨 수 세기는..)
 ```
 
 ![IMAGE2](images/week5image-2.png)
@@ -190,8 +190,8 @@ ORDER BY BOARD_ID DESC
  
 ```
 - 날짜 조건: WHERE에서 등호를 통해 조건을 걸었다
-- CASE WHEN으로 바꾼 값: STATUS에 기존에 입력된 값을 한글화하여야 했기에 각각 조건을 걸어 변환해 주었다.
-- ELSE에 해당하는 경우: 3가지 status 상태 중 적히지 않은 done 상태
+- CASE WHEN으로 바꾼 값: STATUS에 기존에 입력된 값을 한글화하여야 했기에 각각 조건을 걸어 변환해 주었다. 컬럼은 유지니까 앞에서 쓰지 말고 뒤에서 END AS랑 같이 써주기
+- ELSE에 해당하는 경우: 3가지 status 상태 중 적히지 않은 done 상태. 근데 그냥 없이 얘도 WHEN으로 해줘도 된다 ELSE 없어도 됨
 - 정렬 기준: 게시판 id를 기준으로 내림차순 (디폴트값이 아니니까 DESC!)
 - 주의할 점: SQL 에서는 == 이거 안쓰고 무조건 = 등호 한 개만 쓴다 주의!!
 ```
@@ -216,7 +216,7 @@ ORDER BY AVERAGE_DURATION DESC, CAR_ID DESC
 ```
 - GROUP BY 기준: 차의 등록번호 기준으로 렌트 기록 분류
 - 평균을 계산한 방식: AVG로 평균 계산, 소수점 한 자릿수 반영
-- HAVING에 사용한 조건: 차의 등록번호에서 DAFEDIFF를 통해 대여 시작 시간과 반납 시간의 차를 구함. 당일대여 당일반납 주의로 +1
+- HAVING에 사용한 조건: 차의 등록번호에서 DAFEDIFF를 통해 대여 시작 시간과 반납 시간의 차를 구함. 당일대여 당일반납 주의로 +1 (앞에 문제1과 같은 방식)
 - 처음 헷갈렸던 점: +1 반영하는 점, 정렬순서가 여러 개일 경우 콤마 사용, HAVING 은 그냥 그룹 기준 WHERE과 동일 취급
 ```
 
@@ -228,7 +228,7 @@ ORDER BY AVERAGE_DURATION DESC, CAR_ID DESC
 
 ```
 1. 날짜 함수 중 가장 헷갈린 함수: DATEDIFF와 DATETIME_DIFF 외에도... DATE나 TIME, DATETIME, TIMESTAMP 따라 조금씩 달라지는 듯
-2. CASE WHEN을 사용할 때 기억해야 할 문법: END_AS를 잊지 말자. 문제3처럼 기존의 컬럼을 변형하는 식일 시에는 앞에서 기존 컬럼명을 적지 않기
+2. CASE WHEN을 사용할 때 기억해야 할 문법: ELSE 없어도 됨. END_AS를 잊지 말자. 문제3처럼 기존의 컬럼을 변형하는 식일 시에는 앞에서 기존 컬럼명을 적지 않기
 3. 날짜/시간 데이터나 조건문을 활용해보고 싶은 분석 상황: 상품 판매 목록 등... 날짜별 실적 분석 상황
 ```
 
